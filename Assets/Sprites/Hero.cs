@@ -1,6 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
+//public enum HeroState{
+//	Idle,
+//	Run,
+//	JumpUp,
+//	JumpDown
+//}
+
 public class Hero : IActor
 {
 	
@@ -22,6 +29,22 @@ public class Hero : IActor
 	
 	void Update(){
 		this.state.DoUpdata();
+		
+//		float axisH = Input.GetAxis("Horizontal");
+//		float axisV = 0f;
+//		
+//		moveDir.x = axisH * speed;
+//		
+//		if(cc.isGrounded){
+//			if(Input.GetAxis("Jump") > 0){
+//				moveDir.y = jumpSpeed;
+//			}
+//		}else{
+//			moveDir.y -= gravity * Time.deltaTime;
+//		}
+//		
+//		cc.Move(moveDir * Time.deltaTime);
+		
 	}
 	
 //	public void OnHeroMoveEnd(){
@@ -70,19 +93,35 @@ public class Hero : IActor
 		}else{
 			if(axisH != 0){
 				updataState(new IActorAction(EFSMAction.HERO_RUN));
+			}else if(Input.GetAxis("Jump") > 0){
+				updataState(new IActorAction(EFSMAction.HERO_ONAIR_UP));
 			}
 		}
 	}
 	
 	public override void DoUpdateRun ()
 	{
-		float axisH = Input.GetAxis("Horizontal");
-		if(axisH != 0){
-			moveDir.x = axisH * speed;
-			cc.Move(moveDir * Time.deltaTime);
+		if(cc.isGrounded){
+			float axisH = Input.GetAxis("Horizontal");
+			if(axisH != 0){
+				moveDir.x = axisH * speed;
+				cc.Move(moveDir * Time.deltaTime);
+				if(axisH > 0){
+					SetFace(true);
+				}else{
+					SetFace(false);
+				}
+			}else{
+				updataState(new IActorAction(EFSMAction.HERO_IDLE));
+			}
+			
+			if(Input.GetAxis("Jump") > 0){
+				updataState(new IActorAction(EFSMAction.HERO_ONAIR_UP));
+			}	
 		}else{
-			updataState(new IActorAction(EFSMAction.HERO_IDLE));
+			updataState(new IActorAction(EFSMAction.HERO_ONAIR_DOWN));
 		}
+		
 	}
 	
 	public override void OnEnterIdle ()
@@ -103,9 +142,55 @@ public class Hero : IActor
 	public override void DoUpdateOnAirDown ()
 	{
 		moveDir.y -= gravity * Time.deltaTime;
+		float axisH = Input.GetAxis("Horizontal");
+		if(axisH != 0){
+			moveDir.x = axisH * speed;
+			if(axisH > 0){
+				SetFace(true);
+			}else{
+				SetFace(false);
+			}
+		}
 		cc.Move(moveDir * Time.deltaTime);
+		if(cc.isGrounded){
+			updataState(new IActorAction(EFSMAction.HERO_IDLE));
+		}
 	}
-//	
+	
+	public override void OnEnterOnAirUp ()
+	{
+		ani_sprite.Play("jump_up");
+		moveDir.y = jumpSpeed;
+	} 
+	
+	public override void DoUpdateOnAirUp ()
+	{
+		moveDir.y -= gravity * Time.deltaTime;
+		float axisH = Input.GetAxis("Horizontal");
+		if(axisH != 0){
+			moveDir.x = axisH * speed;
+			if(axisH > 0){
+				SetFace(true);
+			}else{
+				SetFace(false);
+			}
+		}
+		if(moveDir.y > 0){
+			cc.Move(moveDir * Time.deltaTime);
+		}else{
+			updataState(new IActorAction(EFSMAction.HERO_ONAIR_DOWN));
+		}
+	}
+	
+	public void SetFace(bool isRigth){
+		if(isRigth && ani_sprite.scale.x < 0){
+			ani_sprite.FlipX();
+		}else if(!isRigth && ani_sprite.scale.x > 0){
+			ani_sprite.FlipX();
+		}
+	}
+	
+	//	
 //	public override void OnEnterHeroFlash ()
 //	{
 //		Vector2 pos = this.GetWorldPos();

@@ -134,6 +134,8 @@ public class HeroActorState_Idle : IActorState{
 			result = new HeroActorState_Run(actor);
 		}else if(action == EFSMAction.HERO_ONAIR_DOWN){
 			result = new HeroActorState_OnAir_Down(actor);
+		}else if(action == EFSMAction.HERO_ONAIR_UP){
+			result = new HeroActorState_OnAir_Up(actor);
 		}
 		return result;
 	}
@@ -150,6 +152,31 @@ public class HeroActorState_Idle : IActorState{
 }
 
 
+public class HeroActorState_OnAir_Up : IActorState{
+	public HeroActorState_OnAir_Up(IActor actor){
+		this.actor = actor;
+	}
+	
+	public override IActorState toNextState (EFSMAction action)
+	{
+		IActorState result = null;
+		if(action == EFSMAction.HERO_ONAIR_DOWN){
+			result = new HeroActorState_OnAir_Down(actor);
+		}
+		return result;
+	}
+	
+	public override void DoUpdata ()
+	{
+		actor.DoUpdateOnAirUp();
+	}
+	
+	public override void OnEnter ()
+	{
+		actor.OnEnterOnAirUp();
+	}
+}
+
 public class HeroActorState_Run : IActorState{
 	public HeroActorState_Run(IActor actor){
 		this.actor = actor;
@@ -160,6 +187,10 @@ public class HeroActorState_Run : IActorState{
 		IActorState result = null;
 		if(action == EFSMAction.HERO_IDLE){
 			result = new HeroActorState_Idle(actor);
+		}else if(action == EFSMAction.HERO_ONAIR_UP){
+			result = new HeroActorState_OnAir_Up(actor);
+		}else if(action == EFSMAction.HERO_ONAIR_DOWN){
+			result = new HeroActorState_OnAir_Down(actor);
 		}
 		return result;
 	}
@@ -183,6 +214,9 @@ public class HeroActorState_OnAir_Down : IActorState{
 	public override IActorState toNextState (EFSMAction action)
 	{
 		IActorState result = null;
+		if(action == EFSMAction.HERO_IDLE){
+			result = new HeroActorState_Idle(actor);
+		}
 		return result;
 	}
 	

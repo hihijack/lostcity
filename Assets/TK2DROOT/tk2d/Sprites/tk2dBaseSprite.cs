@@ -176,6 +176,9 @@ public abstract class tk2dBaseSprite : MonoBehaviour
 		                  new Vector3(sprite.boundsData[1].x * _scale.x, sprite.boundsData[1].y * _scale.y, sprite.boundsData[1].z * _scale.z));
 	}
 	
+	public void FlipX(){
+		scale = new Vector3(-_scale.x, _scale.y, _scale.z);
+	}
 	// Unity functions
 	public void Start()
 	{

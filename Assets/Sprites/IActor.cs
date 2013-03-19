@@ -110,4 +110,7 @@ public class IActor : MonoBehaviour{
 	
 	public virtual void OnEnterOnAirDown(){}
 	public virtual void DoUpdateOnAirDown(){}
+	
+	public virtual void OnEnterOnAirUp(){}
+	public virtual void DoUpdateOnAirUp(){}
 }
