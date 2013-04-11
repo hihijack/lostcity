@@ -11,40 +11,37 @@ using System.Collections;
 public class Hero : IActor
 {
 	
-	public float speed = 3.0f;
+	public float speed = 10.0f;
 	
 	public float jumpSpeed = 8.0f;
 	
 	public float gravity = 20.0f;
 	
+	public float pushPow = 1f;
+	
 	private CharacterController cc;
 	
 	private Vector2 moveDir = Vector2.zero;
+	
+	GameView gameView;
+	
+	int axisH = 0;
+	int btnA = 0;
+	int btnB = 0;
 	
 	void Start(){
 		cc = GetComponent<CharacterController>();
 		ani_sprite = GetComponent<tk2dAnimatedSprite>();
 		state = new HeroActorState_Idle(this);
+		gameView = GameObject.Find("CPU").GetComponent<GameView>();
 	}
 	
 	void Update(){
+		axisH = gameView.VCInput_Axis;
+		btnA = gameView.VCInput_BtnA;
+		btnB = gameView.VCInput_BtnB;
+		
 		this.state.DoUpdata();
-		
-//		float axisH = Input.GetAxis("Horizontal");
-//		float axisV = 0f;
-//		
-//		moveDir.x = axisH * speed;
-//		
-//		if(cc.isGrounded){
-//			if(Input.GetAxis("Jump") > 0){
-//				moveDir.y = jumpSpeed;
-//			}
-//		}else{
-//			moveDir.y -= gravity * Time.deltaTime;
-//		}
-//		
-//		cc.Move(moveDir * Time.deltaTime);
-		
 	}
 	
 //	public void OnHeroMoveEnd(){
@@ -72,28 +69,16 @@ public class Hero : IActor
 //	
 	public override void DoUpdateIdle ()
 	{
-		float axisH = Input.GetAxis("Horizontal");
-//		float axisV = 0f;
-		
-//		moveDir.x = axisH * speed;
-//		
-//		if(cc.isGrounded){
-//			if(Input.GetAxis("Jump") > 0){
-//				moveDir.y = jumpSpeed;
-//			}
-//		}else{
-//			moveDir.y -= gravity * Time.deltaTime;
-//		}
-//		
-//		cc.Move(moveDir * Time.deltaTime);
-		
-		
 		if(!cc.isGrounded){
 			updataState(new IActorAction(EFSMAction.HERO_ONAIR_DOWN));
 		}else{
 			if(axisH != 0){
-				updataState(new IActorAction(EFSMAction.HERO_RUN));
-			}else if(Input.GetAxis("Jump") > 0){
+				if(IsHitSomeThing()){
+					
+				}else{
+					updataState(new IActorAction(EFSMAction.HERO_RUN));
+				}
+			}else if(btnA > 0){
 				updataState(new IActorAction(EFSMAction.HERO_ONAIR_UP));
 			}
 		}
@@ -102,7 +87,6 @@ public class Hero : IActor
 	public override void DoUpdateRun ()
 	{
 		if(cc.isGrounded){
-			float axisH = Input.GetAxis("Horizontal");
 			if(axisH != 0){
 				moveDir.x = axisH * speed;
 				cc.Move(moveDir * Time.deltaTime);
@@ -115,7 +99,7 @@ public class Hero : IActor
 				updataState(new IActorAction(EFSMAction.HERO_IDLE));
 			}
 			
-			if(Input.GetAxis("Jump") > 0){
+			if(btnA > 0){
 				updataState(new IActorAction(EFSMAction.HERO_ONAIR_UP));
 			}	
 		}else{
@@ -142,7 +126,6 @@ public class Hero : IActor
 	public override void DoUpdateOnAirDown ()
 	{
 		moveDir.y -= gravity * Time.deltaTime;
-		float axisH = Input.GetAxis("Horizontal");
 		if(axisH != 0){
 			moveDir.x = axisH * speed;
 			if(axisH > 0){
@@ -166,7 +149,6 @@ public class Hero : IActor
 	public override void DoUpdateOnAirUp ()
 	{
 		moveDir.y -= gravity * Time.deltaTime;
-		float axisH = Input.GetAxis("Horizontal");
 		if(axisH != 0){
 			moveDir.x = axisH * speed;
 			if(axisH > 0){
@@ -189,6 +171,24 @@ public class Hero : IActor
 			ani_sprite.FlipX();
 		}
 	}
+	
+	public bool IsHitSomeThing(){
+		return false;
+	}
+	
+	void OnControllerColliderHit(ControllerColliderHit hit) {
+		Rigidbody body = hit.collider.attachedRigidbody;
+		if (body == null || body.isKinematic)
+			return;
+
+		if (hit.moveDirection.y < -0.3F)
+			return;
+
+		Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, 0);
+		Vector3 v = pushDir * pushPow;
+		body.velocity = pushDir * pushPow;
+	}
+	
 	
 	//	
 //	public override void OnEnterHeroFlash ()
