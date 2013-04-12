@@ -40,7 +40,6 @@ public class Hero : IActor
 		axisH = gameView.VCInput_Axis;
 		btnA = gameView.VCInput_BtnA;
 		btnB = gameView.VCInput_BtnB;
-		
 		this.state.DoUpdata();
 	}
 	
@@ -97,6 +96,7 @@ public class Hero : IActor
 				}
 			}else{
 				updataState(new IActorAction(EFSMAction.HERO_IDLE));
+				moveDir.Set(0f, 0f);
 			}
 			
 			if(btnA > 0){
