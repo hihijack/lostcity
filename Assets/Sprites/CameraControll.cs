@@ -10,10 +10,14 @@ public class CameraControll : MonoBehaviour {
 
 	public GameObject target;
 	public EViewType viewType;
-	
+	GameView gameView;
+	private float upSpeed = 5.0f;
+	private float uplimitOffset = 4.0f;
+	private float posY;
 	// Use this for initialization
 	void Start () {
 		viewType = EViewType.A;
+		gameView = GameObject.Find("CPU").GetComponent<GameView>();
 	}
 	
 	// Update is called once per frame
@@ -24,8 +28,22 @@ public class CameraControll : MonoBehaviour {
 		float xSelf = transform.position.x;
 		float ySelf = transform.position.y;
 		float zSelf = transform.position.z;
+		
+		// look up
+		if(gameView.VCInput_Ver_Axis > 0){
+			posY += upSpeed * Time.deltaTime;
+			if(posY > (y + uplimitOffset)){
+				posY = (y + uplimitOffset);
+			}
+		}else{
+			posY -= upSpeed * Time.deltaTime;
+			if(posY < y){
+				posY = y;
+			}
+		}
+		
 		if(viewType == EViewType.A){
-			transform.position = new Vector3(x, y, zSelf);
+			transform.position = new Vector3(x, posY, zSelf);
 		}else if(viewType == EViewType.B){
 			transform.position = new Vector3(xSelf, y, z);
 		}

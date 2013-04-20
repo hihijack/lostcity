@@ -11,5 +11,7 @@ public static class IConst
 	public const int RectId_Right = 2;
 	public const int RectId_Down = 3;
 	public const int RectId_Left = 4;
+	
+	public const float RuneStone_Jump_Rate = 2.5f; // 10 cube
 }
 

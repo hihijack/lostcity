@@ -30,3 +30,8 @@ public enum EFSMAction {
 	HERO_ONAIR_DOWN,
 	HERO_ONAIR_UP
 }
+
+public enum ERuneStoneType{
+	NONE,
+	JUMP
+}

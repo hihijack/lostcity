@@ -10,12 +10,13 @@ public class GameView : MonoBehaviour
 	
 	
 	public int VCInput_Axis;
+	public int VCInput_Ver_Axis;
 	public int VCInput_BtnA;
 	public int VCInput_BtnB;
+	public Camera main_camera;
 	
 	void Start ()
 	{
-		
 		
 	}
 	
@@ -36,11 +37,13 @@ public class GameView : MonoBehaviour
 			}
 			
 			if (dpad.Up){
-				
+				VCInput_Ver_Axis = 1;
+			}else if(dpad.Down){
+				VCInput_Ver_Axis = -1;
+			}else{
+				VCInput_Ver_Axis = 0;
 			}
-			if (dpad.Down){
-				
-			}
+			
 		}
 		
 		VCButtonBase abtn = VCButtonBase.GetInstance("BtnA");
@@ -60,5 +63,37 @@ public class GameView : MonoBehaviour
 		}else{
 			VCInput_BtnB = 0;
 		}
+		
+		// keyboard controll
+		/// for test.when build， close it
+		if(Input.GetKey(KeyCode.LeftArrow)){
+			VCInput_Axis = -1;
+		}else if(Input.GetKey(KeyCode.RightArrow)){
+			VCInput_Axis = 1;
+		}else{
+			VCInput_Axis = 0;
+		}
+		
+		
+		if(Input.GetKey(KeyCode.UpArrow)){
+			VCInput_Ver_Axis = 1;
+		}else if(Input.GetKey(KeyCode.DownArrow)){
+			VCInput_Ver_Axis = -1;
+		}else{
+			VCInput_Ver_Axis = 0;
+		}
+		
+		if(Input.GetKeyDown(KeyCode.Space)){
+			VCInput_BtnA = 1;
+		}else{
+			VCInput_BtnA = 0;
+		}
+		
+		if(Input.GetKeyDown(KeyCode.E)){
+			VCInput_BtnB = 1;
+		}else{
+			VCInput_BtnB = 0;
+		}
+		
 	}
 }
