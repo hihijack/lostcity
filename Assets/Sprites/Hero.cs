@@ -22,6 +22,7 @@ public class Hero : IActor
 	GameView gameView;
 	
 	int axisH = 0;
+	int axisV = 0;
 	int btnA = 0;
 	int btnB = 0;
 	
@@ -34,6 +35,7 @@ public class Hero : IActor
 	
 	void Update(){
 		axisH = gameView.VCInput_Axis;
+		axisV = gameView.VCInput_Ver_Axis;
 		btnA = gameView.VCInput_BtnA;
 		btnB = gameView.VCInput_BtnB;
 		moveDir.x = 0f;
@@ -51,18 +53,31 @@ public class Hero : IActor
 		if(!cc.isGrounded){
 			updataState(new IActorAction(EFSMAction.HERO_ONAIR_DOWN));
 		}else{
-			
-			InteractiveHandle();
-		
-			if(axisH != 0){
-				if(IsHitSomeThing()){
-					
-				}else{
-					updataState(new IActorAction(EFSMAction.HERO_RUN));
+			if(gameView.IsInGameState(EGameState.Running)){
+				if(axisV < 0){
+					string strUIInfo = GetCurUIInfoStr();
+					if(!string.IsNullOrEmpty(strUIInfo)){
+						gameView.ShowUIInfo(strUIInfo);
+					}
 				}
-			}else if(btnA > 0){
-				updataState(new IActorAction(EFSMAction.HERO_ONAIR_UP));
+				
+				InteractiveHandle();
+			
+				if(axisH != 0){
+					if(IsHitSomeThing()){
+						
+					}else{
+						updataState(new IActorAction(EFSMAction.HERO_RUN));
+					}
+				}else if(btnA > 0){
+					updataState(new IActorAction(EFSMAction.HERO_ONAIR_UP));
+				}
+			}else if(gameView.IsInGameState(EGameState.UIInfoing)){
+				if(btnA > 0){
+					gameView.HideUIInfo();
+				}
 			}
+			
 		}
 	}
 	
@@ -195,6 +210,23 @@ public class Hero : IActor
 				}
 			}
 		}
+	}
+	
+	public string GetCurUIInfoStr(){
+		string r = "";
+		GameObject gobjInteractive =  GetCurBGGameObject();
+		if(gobjInteractive != null){
+			string name = gobjInteractive.name;
+			switch (name) {
+			case "LockRune_1":{
+				r = IText.Text_Clock;
+			}
+				break;
+			default:
+			break;
+			}
+		}
+		return r;
 	}
 	#endregion
 	

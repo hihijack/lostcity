@@ -1,16 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Sprites\CameraControll.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Sprites\IConst.cs">
     <Files>
       <File FileName="Assets\Sprites\HeroControll.cs" Line="1" Column="1" />
-      <File FileName="Assets\Sprites\Hero.cs" Line="46" Column="58" />
+      <File FileName="Assets\Sprites\Hero.cs" Line="75" Column="5" />
       <File FileName="Assets\Sprites\IActor.cs" Line="1" Column="1" />
       <File FileName="Assets\Sprites\Enermy.cs" Line="1" Column="1" />
       <File FileName="Assets\Sprites\FSM\IActorState.cs" Line="1" Column="1" />
       <File FileName="Assets\Sprites\IGame.cs" Line="1" Column="1" />
-      <File FileName="Assets\Sprites\IConst.cs" Line="15" Column="55" />
+      <File FileName="Assets\Sprites\IConst.cs" Line="17" Column="50" />
       <File FileName="Assets\Sprites\CameraControll.cs" Line="36" Column="23" />
-      <File FileName="Assets\Sprites\GameView.cs" Line="83" Column="25" />
+      <File FileName="Assets\Sprites\GameView.cs" Line="158" Column="5" />
+      <File FileName="Assets\Sprites\IText.cs" Line="6" Column="58" />
+      <File FileName="Assets\Sprites\IPath.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

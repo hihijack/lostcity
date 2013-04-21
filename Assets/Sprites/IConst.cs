@@ -13,5 +13,8 @@ public static class IConst
 	public const int RectId_Left = 4;
 	
 	public const float RuneStone_Jump_Rate = 2.5f; // 10 cube
+	
+	public const float UIInfoShowAnimInterval = 0.08f;
+	public const float UIInfoBlinkInterval = 0.3f;
 }
 
