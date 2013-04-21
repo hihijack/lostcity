@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2012 Tasharen Entertainment
+// Copyright ï¿½ 2011-2012 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -186,7 +186,11 @@ public class UIFilledSprite : UISprite
 	/// Virtual function called by the UIScreen that fills the buffers.
 	/// </summary>
 
+#if UNITY_3_5_4
 	override public void OnFill (BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color> cols)
+#else
+	override public void OnFill (BetterList<Vector3> verts, BetterList<Vector2> uvs, BetterList<Color32> cols)
+#endif
 	{
 		float x0 =  0f;
 		float y0 =  0f;
@@ -245,6 +249,14 @@ public class UIFilledSprite : UISprite
 		uv[1] = new Vector2(u1, v0);
 		uv[2] = new Vector2(u0, v0);
 		uv[3] = new Vector2(u0, v1);
+
+		Color colF = color;
+		colF.a *= mPanel.alpha;
+#if UNITY_3_5_4
+		Color col = atlas.premultipliedAlpha ? NGUITools.ApplyPMA(colF) : colF;
+#else
+		Color32 col = atlas.premultipliedAlpha ? NGUITools.ApplyPMA(colF) : colF;
+#endif
 
 		if (fillDirection == FillDirection.Radial90)
 		{
@@ -323,7 +335,7 @@ public class UIFilledSprite : UISprite
 
 							verts.Add(new Vector3(x, y, 0f));
 							uvs.Add(new Vector2(u, v));
-							cols.Add(color);
+							cols.Add(col);
 						}
 					}
 					else
@@ -338,7 +350,7 @@ public class UIFilledSprite : UISprite
 
 							verts.Add(new Vector3(x, y, 0f));
 							uvs.Add(new Vector2(u, v));
-							cols.Add(color);
+							cols.Add(col);
 						}
 					}
 				}
@@ -421,7 +433,7 @@ public class UIFilledSprite : UISprite
 
 							verts.Add(new Vector3(x, y, 0f));
 							uvs.Add(new Vector2(u, v));
-							cols.Add(color);
+							cols.Add(col);
 						}
 					}
 					else
@@ -435,7 +447,7 @@ public class UIFilledSprite : UISprite
 
 							verts.Add(new Vector3(x, y, 0f));
 							uvs.Add(new Vector2(u, v));
-							cols.Add(color);
+							cols.Add(col);
 						}
 					}
 				}
@@ -448,7 +460,7 @@ public class UIFilledSprite : UISprite
 		{
 			verts.Add(xy[i]);
 			uvs.Add(uv[i]);
-			cols.Add(color);
+			cols.Add(col);
 		}
 	}
 }
