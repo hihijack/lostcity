@@ -35,3 +35,8 @@ public enum ERuneStoneType{
 	NONE,
 	JUMP
 }
+
+public enum EActorType{
+	BoxMono,
+	Hero
+}

@@ -1,18 +1,22 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Sprites\IConst.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Sprites\Hero.cs">
     <Files>
       <File FileName="Assets\Sprites\HeroControll.cs" Line="1" Column="1" />
-      <File FileName="Assets\Sprites\Hero.cs" Line="75" Column="5" />
+      <File FileName="Assets\Sprites\Hero.cs" Line="142" Column="4" />
+      <File FileName="Assets\Sprites\IPath.cs" Line="1" Column="1" />
       <File FileName="Assets\Sprites\IActor.cs" Line="1" Column="1" />
       <File FileName="Assets\Sprites\Enermy.cs" Line="1" Column="1" />
-      <File FileName="Assets\Sprites\FSM\IActorState.cs" Line="1" Column="1" />
       <File FileName="Assets\Sprites\IGame.cs" Line="1" Column="1" />
-      <File FileName="Assets\Sprites\IConst.cs" Line="17" Column="50" />
-      <File FileName="Assets\Sprites\CameraControll.cs" Line="36" Column="23" />
-      <File FileName="Assets\Sprites\GameView.cs" Line="158" Column="5" />
-      <File FileName="Assets\Sprites\IText.cs" Line="6" Column="58" />
-      <File FileName="Assets\Sprites\IPath.cs" Line="1" Column="1" />
+      <File FileName="Assets\Sprites\IConst.cs" Line="1" Column="1" />
+      <File FileName="Assets\Sprites\CameraControll.cs" Line="1" Column="1" />
+      <File FileName="Assets\Sprites\Tools.cs" Line="263" Column="6" />
+      <File FileName="Assets\Sprites\IText.cs" Line="1" Column="1" />
+      <File FileName="Assets\Sprites\GameView.cs" Line="1" Column="1" />
+      <File FileName="Assets\Sprites\FSM\IActorState.cs" Line="1" Column="1" />
+      <File FileName="Assets\Sprites\IActorTypeId.cs" Line="5" Column="2" />
+      <File FileName="Assets\Sprites\BoxMono.cs" Line="58" Column="27" />
+      <File FileName="Assets\Sprites\AudioManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

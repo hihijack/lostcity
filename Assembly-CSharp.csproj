@@ -139,6 +139,7 @@
      <Compile Include="Assets\NGUI\Scripts\Tweening\TweenVolume.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UILocalize.cs" />
      <Compile Include="Assets\Sprites\AudioManager.cs" />
+     <Compile Include="Assets\Sprites\BoxMono.cs" />
      <Compile Include="Assets\Sprites\CameraControll.cs" />
      <Compile Include="Assets\Sprites\Enermy.cs" />
      <Compile Include="Assets\Sprites\FSM\IActorAction.cs" />
@@ -148,10 +149,12 @@
      <Compile Include="Assets\Sprites\Hero.cs" />
      <Compile Include="Assets\Sprites\HeroControll.cs" />
      <Compile Include="Assets\Sprites\IActor.cs" />
+     <Compile Include="Assets\Sprites\IActorTypeId.cs" />
      <Compile Include="Assets\Sprites\IConst.cs" />
      <Compile Include="Assets\Sprites\IGame.cs" />
      <Compile Include="Assets\Sprites\IPath.cs" />
      <Compile Include="Assets\Sprites\IText.cs" />
+     <Compile Include="Assets\Sprites\Tools.cs" />
      <Compile Include="Assets\Sprites\iTween.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Fonts\tk2dFont.cs" />
      <Compile Include="Assets\TK2DROOT\tk2d\Fonts\tk2dFontData.cs" />

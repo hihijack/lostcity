@@ -1345,7 +1345,12 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void MoveTo(GameObject target, Vector3 position, float time){
 		MoveTo(target,Hash("position",position,"time",time));
-	}	
+	}
+	
+	public static void MoveTo(GameObject target, GameObject gobjTo, float time){
+		Vector3 position = gobjTo.transform.position;
+		MoveTo(target,Hash("position",position,"time",time));
+	}
 		
 	/// <summary>
 	/// Changes a GameObject's position over time to a supplied destination with FULL customization options.

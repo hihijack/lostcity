@@ -3,7 +3,7 @@ using System.Collections;
 
 public class IActor : MonoBehaviour{
 	public int id;
-	public int typeid;
+	public EActorType actor_type;
 	public bool isEnermy;
 	public IActorState state;
 	public IActorAction action;
