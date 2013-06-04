@@ -26,8 +26,6 @@ public class Hero : IActor
 	int btnA = 0;
 	int btnB = 0;
 	
-	bool isKillingEmerny = false;
-	
 	private int g_Clock_Times = 0;
 	
 	void Start(){
@@ -50,22 +48,25 @@ public class Hero : IActor
 	
 	void OnGUI(){
 		GUI.Label(new Rect(50, 50, 300, 20), state.ToString());
-		GUI.Label(new Rect(50, 100, 300, 20), moveDir.ToString());
+		GUI.Label(new Rect(50, 100, 300, 20), cc.isGrounded.ToString());
 		GUI.Label(new Rect(50, 150, 300, 20), gameView.VCInput_Axis.ToString());
 	}
 	
 	public override void DoUpdateIdle ()
 	{
+		moveDir.y = -0.1f;
+		cc.SimpleMove(moveDir);
 		if(!cc.isGrounded){
 			updataState(new IActorAction(EFSMAction.HERO_ONAIR_DOWN));
 		}else{
+			
 			if(gameView.IsInGameState(EGameState.Running)){
-				if(axisV < 0){
-					string strUIInfo = GetCurUIInfoStr();
-					if(!string.IsNullOrEmpty(strUIInfo)){
-						gameView.ShowUIInfo(strUIInfo);
-					}
-				}
+//				if(axisV < 0){
+//					string strUIInfo = GetCurUIInfoStr();
+//					if(!string.IsNullOrEmpty(strUIInfo)){
+//						gameView.ShowUIInfo(strUIInfo);
+//					}
+//				}
 				
 				InteractiveHandle();
 			
@@ -77,6 +78,11 @@ public class Hero : IActor
 					}
 				}else if(btnA > 0){
 					updataState(new IActorAction(EFSMAction.HERO_ONAIR_UP));
+				}
+				
+				// use item
+				if(axisV < 0 && btnB > 0){
+					UseItem();
 				}
 			}else if(gameView.IsInGameState(EGameState.UIInfoing)){
 				if(btnA > 0){
@@ -153,10 +159,6 @@ public class Hero : IActor
 			jumpSpeedTemp *= IConst.RuneStone_Jump_Rate;
 		}
 		
-		if(isKillingEmerny){
-			jumpSpeedTemp *= 0.3f;
-			isKillingEmerny = false;
-		}
 		moveDir.y = jumpSpeedTemp;
 	} 
 	
@@ -199,7 +201,7 @@ public class Hero : IActor
 		if(hits.Length == 2 && hits[1].transform.name.Equals("hero")){
 			gobjR = hits[0].transform.gameObject;
 		}else{
-			Debug.LogError("hits.Length != 2" + hits.Length);
+//			Debug.LogError("hits.Length != 2" + hits.Length);
 		}
 		return gobjR;
 	}
@@ -221,7 +223,7 @@ public class Hero : IActor
 	}
 	
 	public void InteractiveHandle(){
-		if(btnB > 0){
+		if(btnB > 0 && gameView.IsInGameState(EGameState.Running)){
 			GameObject gobjInteractive =  GetCurBGGameObject();
 			if(gobjInteractive != null){
 				string name = gobjInteractive.name;
@@ -234,7 +236,7 @@ public class Hero : IActor
 					Debug.LogError("can't find method:" + funcName);
 				}
 			}else{
-				Debug.LogError("Can't find Interactive");
+//				Debug.LogError("Can't find Interactive");
 			}
 		}
 	}
@@ -364,10 +366,12 @@ public class Hero : IActor
 			g_gobjCurStepOn = hit.gameObject;
 		}
 		
-		if(hit.collider.name.Equals("head")){
-			DestroyObject(hit.collider.transform.parent.gameObject);
-			isKillingEmerny = true;
+		// killed when hit enermy
+		if(hit.collider.CompareTag("enermy")){
+			Killed();
 		}
+		
+		
 		
 		// push
 		if(Mathf.Abs(hit.moveDirection.y) < 0.3f){
@@ -379,6 +383,15 @@ public class Hero : IActor
 					body.velocity = pushDir * 2;
 				}
 			}
+		}
+	}
+	
+	void OnTriggerEnter(Collider other){
+		GameObject gobjOther = other.gameObject;
+		// hit float item
+		FloatItem floatItem = gobjOther.GetComponent<FloatItem>();
+		if(floatItem != null){
+			gameView.PlayerHitFloatItem(floatItem);
 		}
 	}
 	
@@ -394,6 +407,28 @@ public class Hero : IActor
 			}
 		}
 		return r;
+	}
+	
+	public void PutLandmine(){
+		if(gameView.HasItem(EItemType.LandMine)){
+			string path = "";
+		}
+	}
+	
+	void UseItem(){
+		EItemType itemType = gameView.curChooseItemType;
+		switch (itemType) {
+		case EItemType.LandMine:{
+			PutLandmine();
+		}
+			break;
+		default:
+		break;
+		}
+	}
+	
+	void Killed(){
+		
 	}
 	
 }

@@ -30,23 +30,26 @@ public class CameraControll : MonoBehaviour {
 		float zSelf = transform.position.z;
 		
 		// look up
-		if(gameView.VCInput_Ver_Axis > 0){
-			posY += upSpeed * Time.deltaTime;
-			if(posY > (y + uplimitOffset)){
-				posY = (y + uplimitOffset);
-			}
-		}else{
-			posY -= upSpeed * Time.deltaTime;
-			if(posY < y){
-				posY = y;
-			}
-		}
-		
+//		if(gameView.VCInput_Ver_Axis > 0){
+//			posY += upSpeed * Time.deltaTime;
+//			if(posY > (y + uplimitOffset)){
+//				posY = (y + uplimitOffset);
+//			}
+//		}else{
+//			posY -= upSpeed * Time.deltaTime;
+//			if(posY < y){
+//				posY = y;
+//			}
+//		}
+//		
 		if(viewType == EViewType.A){
-			transform.position = new Vector3(x, posY, zSelf);
-		}else if(viewType == EViewType.B){
-			transform.position = new Vector3(xSelf, y, z);
+			transform.position = new Vector3(x, y, zSelf);
 		}
+//			else if(viewType == EViewType.B){
+//			transform.position = new Vector3(xSelf, y, z);
+//		}
+		
+		
 //		if(Input.GetKeyDown(KeyCode.R)){
 //			if(viewType == EViewType.A){
 //				viewType = EViewType.B;

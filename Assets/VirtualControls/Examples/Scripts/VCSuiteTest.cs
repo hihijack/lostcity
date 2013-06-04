@@ -83,9 +83,9 @@ public class VCSuiteTest : MonoBehaviour {
 		// if there's an a button, output some info
 		if (VCButtonBase.GetInstance("BtnA") != null)
 		{
-//			GUI.Label(new Rect(10, 30, 300, 20), "aaaaaaaaaa");
+			GUI.Label(new Rect(10, 30, 300, 20), "aaaaaaaaaa");
 		}else{
-//			GUI.Label(new Rect(10, 30, 300, 20), "nullllll");
+			GUI.Label(new Rect(10, 30, 300, 20), "nullllll");
 		}
 		
 		// if there's a dpad, output some info

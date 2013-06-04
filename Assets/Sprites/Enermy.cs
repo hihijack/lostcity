@@ -28,5 +28,17 @@ public class Enermy : IActor
 //			ani_sprite.FlipX();
 //		}
 //	}
+	
+	public void Killed(){
+		Debug.LogError(gameObject.name);//###
+		DestroyObject(gameObject);
+	}
+	
+	public void OnTriggerEnter(Collider other){
+		if(other.gameObject.CompareTag("damage")){
+			Debug.LogError("@@@" + gameObject.name);//###
+			Killed();
+		}
+	}
 }
 

@@ -46,46 +46,20 @@ public class BoxMono : Enermy {
 		}
 	}
 	void OnCollisionEnter(Collision collision) {
-		Debug.LogError("OnCollisionEnter");
-		Debug.LogError(collision.gameObject.name);
-		Debug.LogError(collision.relativeVelocity);
-		Debug.LogError(collision.collider);
 		// if is head hited, killed
 		// else if hit player , kill player
 		// else if hit wall or other acotr, change direction
 		bool isHeadHited = false;
-		bool isHitPlayerWithoutHead = false;
+		bool isHitPlayer = false;
 		bool isHitOther = false;
 		foreach (ContactPoint contact in collision.contacts) {
 			string thisCollider = contact.thisCollider.name;
 			string otherCollider = contact.otherCollider.name;
-			print(contact.thisCollider.name + " hit " + contact.otherCollider.name);
 			Debug.DrawRay(contact.point, contact.normal, Color.red);
-			if(thisCollider.Equals("head")){
-				isHeadHited = true;
-				isHitOther = false;
-				break;
-			}else if(otherCollider.Equals("hero")){
-				isHitPlayerWithoutHead = true;
-				isHitOther = false;
-				break;
-			}else if(thisCollider.Equals("left") || thisCollider.Equals("right")){
-				isHitOther = true;
+			if(thisCollider.Equals("left") || thisCollider.Equals("right")){
+				this.moveDir *= -1;
 			}
-			
 		}
-		
-		if(isHeadHited){
-			// killed
-			DestroyObject(gameObject);
-		}else if(isHitPlayerWithoutHead){
-			// kill player
-			Debug.LogError("kill player");
-		}else if(isHitOther){
-			this.moveDir *= -1;
-		}
-		
-
 	}
 	
 	
